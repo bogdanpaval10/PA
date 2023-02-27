@@ -1,0 +1,49 @@
+walsh.c:
+	- se citesc n si k din fisier, apoi pe rand perechile x, y si se apeleaza
+	functia walsh; daca aceasta functie a returnat o valoare para, se 
+    afiseaza 0, iar daca valoarea este impara atunci se afiseaza 1;
+	- functia walsh este recursiva si se opreste cand "matricea" ajunge sa fie
+	de dimensiune 2x2 si se verifica:
+        - daca x = 1 inseamna ca este in partea de sus, adica nu trebuie negat;
+        - daca x = 2 si y = 1 inseamna ca este in partea stanga jos si 
+        nu trebuie negat, iar daca y = 2 inseamna ca este in dreapta jos si mai
+        trebuie negat cu 1 in plus fata de valoarea nr;
+	- in functia walsh, dupa conditiile oprire sunt 4 cazuri pt recursivitate:
+		- cand x si y sunt <= n / 2 => este in stanga sus, nu trebuie negat, 
+        x si y nu se modifica si nici nr de negari;
+		- cand x <= n / 2 si y > n / 2 => este in dreapta sus, nu trebuie negat 
+		y se modifica dupa formula y - (n / 2), nr de negari este acelasi;
+		- cand x > n / 2 si y <= n / 2 => este in stanga jos, nu trebuie negat,
+		x se modifica dupa formula x - (n / 2), nr de negari este acelasi;
+		- cand x > n / 2 si y > n / 2 => este in dreapta jos (matricea negata),
+		x se modifica dupa formula x - (n / 2) si y similar, iar nr de negari 
+		creste cu 1;
+		- la fiecare apel dimensiunea n se injumatateste;
+	- aceasta functie numara de cate ori a fost in coltul din dreapta jos 
+    pentru a afla de cate ori a fost aplicata negarea;
+    - complexitatea este O(n * k).
+
+statistics.cpp:
+	- vectorul words are n linii si pe fiecare linie este un vector de 
+    frecventa de 27 de elemente pt fiecare cuvant (coloana 0 la fiecare cuvant 
+    este lungimea cuvantului);
+	- se citesc cele n cuvinte si la fiecare cuvant se formeaza vectorul de 
+    frecventa al fiecarei litere;
+	- se parcuge fiecare litera i (1->27 in vectorul words) si la fiecare 
+    litera se formeaza un vector de n elemente de tipul structurii info;
+    se parcurge fiecare cuvant si se adauga la pozitia j indicele inainte de 
+    sortare (.old_ind), nr de aparitii a literei i in cuvantul words[j] (.freq)
+    si lungimea cuvantului (.length);
+		- se sorteaza descrescator vectorul ind (cu informatiile fiecarui cuv) 
+        cu functia sort, avand criteriu de comparatie 2 * .freq - .length;
+		- se parcurge lista de cuvinte sortata si se acceseaza cuvantul din 
+        words pe baza campului .old_ind (in index se salveaza aceasta pozitie),
+        se calculeaza lungimea totala a concatenarii si nr total al literei 
+        dominante; daca frecventa literei > lungimea totala / 2, se 
+        contorizeaza cuvantul j si se continua, altfel se iese din bucla, 
+        deoarece nu se mai respecta conditia din enunt;
+		- se verifica daca nr de cuvinte concatenate pt litera i este maxim;
+	- daca a fost gasit cel putin un cuvant, se afiseaza numarul maxim de 
+    cuvinte ce pot fi concatenate sau -1 in caz contrar;
+    - complexitate: O(n) + (O(n) + O(n * log n) + O(n)) = O(n) + O(n * log n) 
+    = O(n * log n).
