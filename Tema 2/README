@@ -1,0 +1,59 @@
+curatare.cpp
+	- citesc in matricea mat fisierul, daca este '.' atunci pun 0, daca 
+    este 'R' pun -1, daca este 'S' pun 0, iar daca este 'X' pun -1;
+	- calculez distanta de la fiecare robot la fiecare spatiu murdar: 
+    in vectorul rob pe coloana 0 se afla coordonatele robotului in matrice, 
+    iar pe restul coloanelor (j >= 1) se afla coordonatele i, j ale spatiului_j
+    si distanta pana la el (i, j, d);
+	-  calculez distanta de la fiecare spatiu murdar la fiecare spatiu: in 
+    vectorul spaces pe coloana 0 se afla coordonatele spatiului in matrice, iar
+    linia 0 nu contine nimic, iar restul liniilor (i >= 1) si coloanelor 
+    (j >= 1) contin distanta de la spatiul_i la spatiul_j sub forma (i, j, d);
+    daca i == j atunci (-1, -1, -1);
+	- calcularea distantelor se face cu algoritmul lui Lee ca in problema 
+    https://infoarena.ro/problema/alee si se salveaza aceste distante;
+	- pentru a lua toate variantele posibile de a atribui roboti fiecarui 
+    spatiu, am folosit backtracking ca la aranjamente; pt fiecare varianta 
+    aflata in vectorul x se apeleaza functia calculate_dist, unde se calculeaza
+    drumul pe care il are de facut fiecare robot (se considera valoarea maxima 
+    dintre aceste drumuri = maxi);
+	- rezultatul este minimul dintre toate valorile lui maxi;
+	- complexitate: O(n * m) + O(n * m) = O(n * m).
+
+fortificatii.cpp
+	- se formeaza vectorul barbars cu indicii localitatilor controlate de 
+    barbari;
+	- se apeleaza functia bfs, plecand din 0 si prin reapelare se merge prin 
+    toate cele n localitati;
+	- complexitate: O(n) + O(m) = O(n).
+
+beamdrone.cpp
+	 - am crescut cu 1 toti indicii, pentru ca matricea sa fie de la 1,
+	sa o pot borda si sa pun -1 pe contur;
+	- daca este '.' pun in matrice -2, iar daca este 'W' pun -1;
+	- se bordeaza matricea pe linii si coloane, iar la coordonatele xi, yi
+	se pune 0;
+	- functia vertical:
+		- se merge in matrice in sus si in jos de la x, iar daca este spatiu
+		liber ('.') si nici perete ('W'), se actualizeaza nr de pasi si se 
+        adauga in cozile queue_x si queue_y, se pune 'V' in coada direction.
+	- functia horizontally:
+		- se merge in matrice la stanga si la dreapta lui y, iar daca este 
+		spatiu liber ('.'), se actualizeaza nr de pasi si se adauga in cozile 
+        queue_x si queue_y, se pune 'O' in coada direction.
+	- se aplica functiile anterioare plecand din xi, yi si nr de pasi initial 0;
+	- se parcurge coada de elemente (toate cele 3 cozi folosite au aceeasi 
+    dimensiune), se extrag din cozi x si y si se aplica operatia opusa celei 
+    aplicate anterior (conform literei asociate din vectorul direction); daca 
+    in matrice la pozitia xf, yf a fost deja calculata (nu mai este valoarea 
+    initiala -2) atunci se afiseaza.
+	- complexitate: O(n * m).
+
+curse.cpp
+	- citeste in curr primul antrenament, iar in next urmatorul si numara cate 
+	elemente de la stanga spre dreapta sunt egale (pe aceleasi pozitii);
+	- curr primeste valorile antrenamentului urmator (adica next);
+	- pentru fiecare j, calculeaza gradul si il salveaza pe cel cu gradul 0;
+	- merge si la celelalte m - 1 noduri si reactualizeaza gradul in cazul in 
+	care este nevizitat. Apoi, daca este nevizitat si are gradul 0, se salveaza.
+	- complexitate: O(a * n) + O(m * m) + O(m) = O(m * m).
